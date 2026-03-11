@@ -1,19 +1,18 @@
-
-product = input('Write the product for which you need to know the nutrients -> ')
-mass = input('Write the unit of mass measurement that is convenient for you (kg, gramm) -> ')
-number = input('Write the weight of your product -> ')
-
-
+from Core.settings import REQUEST_FIELDS
 from Validate.validate import Validate_Console
 from pydantic import ValidationError
+from ApiClient.client import ClientSearch
 
-dict_for_serializer = Validate_Console.trasform_dict(product,mass,number)
+dict_response_inputs = {}
+
+for i in REQUEST_FIELDS['fields']: 
+    message = REQUEST_FIELDS[i]
+    input_response = input(message)
+    dict_response_inputs[i] = input_response
 
 try:
-    serializer = Validate_Console(**dict_for_serializer)
+    serializer = Validate_Console(**dict_response_inputs)
     serializer.transform_text()
-
-    from ApiClient.client import ClientSearch
 
     client = ClientSearch(serializer.text)
     print(serializer.text)

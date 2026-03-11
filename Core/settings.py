@@ -9,6 +9,10 @@ API_SEARCH = 'https://api.calorieninjas.com/v1/nutrition'
 
 INDEX_FOR_RESPONSE = 'items'
 
+REQUEST_FIELDS = {'product':'Write the product for which you need to know the nutrients -> ',
+                  'mass':'Write the unit of mass measurement that is convenient for you (kg, gramm) -> ',
+                  'number':'Write the weight of your product -> ',
+                  'fields':['product','mass','number']}
 
 
 #На будущие это еще не работает
