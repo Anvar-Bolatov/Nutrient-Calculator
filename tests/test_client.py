@@ -9,13 +9,13 @@ def test_class_response_return():
 
     for i in RESPONSE_FIELD_TO_TEST['fields']:
         field_index = RESPONSE_FIELD_TO_TEST[i]
-        field_value = response_obj.response[field_index]
+        field_value = response_obj.json[field_index]
         assert type(field_value) == float
         list_field_value.append(field_value)
 
 
-    result = response_obj.serializer()
+    response_obj.serializer()
 
-    assert type(result) == str
+    assert type(response_obj.text) == str
     for i in list_field_value:
-        assert str(i) in result
+        assert str(i) in response_obj.text

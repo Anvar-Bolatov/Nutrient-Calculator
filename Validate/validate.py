@@ -8,12 +8,6 @@ class Validate_Console(BaseModel):
     number : int
     text : str = None
 
-    @staticmethod
-    def trasform_dict(product,mass,number):
-        return {'product':product,
-                'mass':mass,
-                'number':number}
-
     @model_validator(mode='after')
     def transform_text(self):
         self.text = f'{self.number}{self.mass} {self.product}'

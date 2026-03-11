@@ -18,8 +18,8 @@ try:
     print(serializer.text)
 
     response = client.dispatch()
-
-    print(response.serializer())
+    response.serializer()
+    print(response.text)
 
 except ValidationError :
     print(f'Данные не подходят к требованиям Валидаций') 

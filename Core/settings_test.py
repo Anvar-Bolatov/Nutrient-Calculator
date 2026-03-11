@@ -1,4 +1,5 @@
 CONSTANT_FOR_TEXT_REQUEST_API = '10kg Meat'
+
 CONSTANT_FOR_PARAMS = {'product':'Meat',
                        'mass': 'kg',
                        'number':'10'}

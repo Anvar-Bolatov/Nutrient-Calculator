@@ -14,6 +14,10 @@ REQUEST_FIELDS = {'product':'Write the product for which you need to know the nu
                   'number':'Write the weight of your product -> ',
                   'fields':['product','mass','number']}
 
+INDEX_FOR_GET_JSON_VALUE = {'calories':'calories',
+                            'protein':'protein_g',
+                            'fat':'fat_total_g',
+                            'fields':['calories','protein','fat']}
 
 #На будущие это еще не работает
 CLASS_USE_TO_SEARCH = 'ApiClient.client.ClientSearch'
