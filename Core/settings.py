@@ -9,6 +9,8 @@ API_SEARCH = 'https://api.calorieninjas.com/v1/nutrition'
 
 INDEX_FOR_RESPONSE = 'items'
 
+
+
 #На будущие это еще не работает
 CLASS_USE_TO_SEARCH = 'ApiClient.client.ClientSearch'
 CLASS_USE_TO_CALCULAT = 'Calculator.calculator.Calculator'
