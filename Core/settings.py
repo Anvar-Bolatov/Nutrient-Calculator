@@ -8,6 +8,8 @@ API_KEY = config('API_KEY')
 API_SEARCH = 'https://api.calorieninjas.com/v1/nutrition'
 
 INDEX_FOR_RESPONSE = 'items'
+INDEX_FOR_GET_JSON_ERROR = 'message'
+COSTANT_FOR_RETURN_ERROR_IN_VIEW = 'The params is not valid'
 
 REQUEST_FIELDS = {'product':'Write the product for which you need to know the nutrients -> ',
                   'mass':'Write the unit of mass measurement that is convenient for you (kg, gramm) -> ',

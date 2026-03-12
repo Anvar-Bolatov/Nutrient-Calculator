@@ -1,6 +1,8 @@
 
 from Core.settings import (API_SEARCH,API_KEY,
-                           INDEX_FOR_RESPONSE,INDEX_FOR_GET_JSON_VALUE)
+                           INDEX_FOR_RESPONSE,
+                           INDEX_FOR_GET_JSON_VALUE,
+                           INDEX_FOR_GET_JSON_ERROR)
 import requests
 
 class Nutriens():
@@ -20,26 +22,35 @@ class ClientSearch():
         return requests.get(API_SEARCH + f'?query={self.param}',headers={'X-Api-Key':API_KEY},)
 
     def get_json(self,response):
+        status = response.status_code
+
+        if not status == requests.codes.ok:
+            try:
+                return response.json()[INDEX_FOR_GET_JSON_ERROR],status
+            
+            except ValueError:
+                return None,status
         try:
             response_value = response.json()[INDEX_FOR_RESPONSE][0]
-
-        except KeyError:
-            return None,response.status_code
-        
-        return response_value,response.status_code
+            status = response.status_code
+            return response_value,status
+        except IndexError:
+            return None,status
     
     def dispatch(self):
         response =self.get_response()
         json,status = self.get_json(response)
 
-        if json and status == 200:
-            return Response(json,status)
+        if not status == requests.codes.ok:
+            if json:
+                return f'Message:{json} \n Status:{status}'
+            else:
+                return f'Response Api is null \n Status:{status}'
         
-        elif json['message']:
-            return f'Message:{json['message']}'
-                     
-        else: 
-            return f"Response Api is null \n Status: {status}" 
+        elif not json:
+            return f'Response Api is null \n Status:{status}'
+        
+        return Response(json,status)
 
 class Response():
 

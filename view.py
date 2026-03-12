@@ -1,4 +1,5 @@
-from Core.settings import REQUEST_FIELDS
+from Core.settings import (REQUEST_FIELDS,
+                           COSTANT_FOR_RETURN_ERROR_IN_VIEW)
 from Validate.validate import Validate_Console
 from pydantic import ValidationError
 from ApiClient.client import ClientSearch
@@ -18,8 +19,13 @@ try:
     print(serializer.text)
 
     response = client.dispatch()
-    response.serializer()
-    print(response.text)
+
+    if type(response) is str:
+        print(response)
+
+    else:
+        response.serializer()
+        print(response.text)
 
 except ValidationError :
-    print(f'Данные не подходят к требованиям Валидаций') 
+    print(COSTANT_FOR_RETURN_ERROR_IN_VIEW) 
