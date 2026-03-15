@@ -1,6 +1,6 @@
 from Core.settings import (REQUEST_FIELDS,
                            COSTANT_FOR_RETURN_ERROR_IN_VIEW)
-from Validate.validate import Validate_Console
+from Validate.validate import Validate_Request
 from pydantic import ValidationError
 from ApiClient.client import ClientSearch
 
@@ -12,13 +12,15 @@ for i in REQUEST_FIELDS['fields']:
     dict_response_inputs[i] = input_response
 
 try:
-    serializer = Validate_Console(**dict_response_inputs)
+    serializer = Validate_Request(**dict_response_inputs)
     serializer.transform_text()
+    serializer.trasform_mode()
 
     client = ClientSearch(serializer.text)
     print(serializer.text)
 
-    response = client.dispatch()
+
+    response = client.dispatch(mode=serializer.mode)
 
     if type(response) is str:
         print(response)

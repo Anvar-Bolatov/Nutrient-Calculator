@@ -7,7 +7,8 @@ COSTANT_FOR_RETURN_ERROR_IN_VIEW = 'The params is not valid'
 
 CONSTANT_FOR_PARAMS = {'product':'Meat',
                        'mass': 'kg',
-                       'number':'10'}
+                       'number':'10',
+                       'mode':'text'}
 
 RESPONSE_FIELDS_TO_TEST = {'calories':'calories',
                          'protein':'protein_g',

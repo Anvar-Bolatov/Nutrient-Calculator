@@ -1,4 +1,5 @@
 from decouple import config
+from .enums import Response_Mode
 
 TYPE_KG = 'kg'
 TYPE_GRAMM = 'gramm'
@@ -11,10 +12,17 @@ INDEX_FOR_RESPONSE = 'items'
 INDEX_FOR_GET_JSON_ERROR = 'message'
 COSTANT_FOR_RETURN_ERROR_IN_VIEW = 'The params is not valid'
 
+DEFAULT_MODE_RESPONSE = Response_Mode.TEXT
+DICT_MODE_RESPONSE = Response_Mode.DICT
+
+DEFAULT_MODE_VALIDATE = Response_Mode.TEXT.value
+DICT_MODE_VALIDATE = Response_Mode.DICT.value
+
 REQUEST_FIELDS = {'product':'Write the product for which you need to know the nutrients -> ',
                   'mass':'Write the unit of mass measurement that is convenient for you (kg, gramm) -> ',
                   'number':'Write the weight of your product -> ',
-                  'fields':['product','mass','number']}
+                  'mode':'Who do you need response dict or text ->',
+                  'fields':['product','mass','number','mode']}
 
 INDEX_FOR_GET_JSON_VALUE = {'calories':'calories',
                             'protein':'protein_g',
