@@ -8,6 +8,9 @@ API_KEY = config('API_KEY')
 
 API_SEARCH = 'https://api.calorieninjas.com/v1/nutrition'
 
+DIR_LOGGER = 'logs'
+MAX_MB_ROTATING_LOGS = 10 
+
 INDEX_FOR_RESPONSE = 'items'
 INDEX_FOR_GET_JSON_ERROR = 'message'
 COSTANT_FOR_RETURN_ERROR_IN_VIEW = 'The params is not valid'
