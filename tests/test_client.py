@@ -1,65 +1,95 @@
-from ApiClient.client import ClientSearch
-from requests.models import Response
-from Core.settings_test import (CONSTANT_FOR_TEXT_REQUEST_API,
-                                RESPONSE_FIELDS_TO_TEST,
-                                CONSTANT_INCORRECT_CASE_FOR_TEXT_REQUEST_API as INCORRECT_CASE_FOR_TEXT)
+from ApiClient.client import ClientSearch,Response
+from requests.models import Response as request_Response
+from Core.settings_test import (CONSTANT_FOR_TEXT_REQUEST_API as TEXT_REQUEST_API,
+                                CONSTANT_INCORRECT_CASE_FOR_TEXT_REQUEST_API as BAD_REQUEST)
 
 from Core.settings import (DEFAULT_MODE_RESPONSE,
-                           DICT_MODE_RESPONSE,
-                           INDEX_FOR_GET_JSON_VALUE as JSON_KEY)
+                           DICT_MODE_RESPONSE)
 
+from Validate.validate import ValidateApiResponse
+from tests.func_test import (func_test_get_json,func_test_get_response,
+                             func_test_get_response_serializer)
+from ApiClient.client import ClientSearch
 from requests import codes
+from Core.enums import ApiJsonIndex
 
-def test_class_response_return_text(): # the test is big this not good to support the code
-    client_search_obj  = ClientSearch(CONSTANT_FOR_TEXT_REQUEST_API)
-    response_text_obj = client_search_obj.dispatch()
-    response_dict_obj = client_search_obj.dispatch(mode=DICT_MODE_RESPONSE)
+def test_method_get_response():
+    response,obj = func_test_get_response()
 
-    list_field_value_text = []
-    list_field_value_dict = []
+    assert isinstance(response,request_Response)
 
-    for i in RESPONSE_FIELDS_TO_TEST['fields']:
-        field_index = RESPONSE_FIELDS_TO_TEST[i]
-        field_value_text = response_text_obj.json[field_index]
-        field_value_dict = response_dict_obj.json[field_index]
 
-        assert isinstance(field_value_text,float)
-        assert isinstance(field_value_dict,float) 
-
-        list_field_value_text.append(field_value_text)
-        list_field_value_dict.append(field_value_dict)
-
-    response_text_obj.serializer()
-    response_dict_obj.serializer()
-
-    assert response_text_obj.mode is DEFAULT_MODE_RESPONSE
-    assert response_dict_obj.mode is DICT_MODE_RESPONSE
-
-    for i in list_field_value_text:
-        assert str(i) in response_text_obj.text
+def test_method_get_json():
     
-    for i in JSON_KEY['fields']:
-        key_value = JSON_KEY[i]
-        json_response = response_dict_obj.text
-        json_value = response_dict_obj.json[key_value]
+    validation,obj = func_test_get_json(TEXT_REQUEST_API)
 
-        assert json_response[i] == json_value
-        assert isinstance(json_response[i],float)
+    assert isinstance(validation,ValidateApiResponse)
 
-def test_incorrect_case_class_ClientSearch_method():
-    client_obj = ClientSearch(INCORRECT_CASE_FOR_TEXT)
 
-    response = client_obj.get_response()
+def test_method_get_json_incorrect_case():
+    validation,obj = func_test_get_json(BAD_REQUEST)
+
+    assert validation.success == False
+    assert isinstance(validation,ValidateApiResponse)
+
+def test_method_dispatch():
+    client_search = ClientSearch(TEXT_REQUEST_API)
+    response = client_search.dispatch()
+
+    assert response.mode == DEFAULT_MODE_RESPONSE
+
+def test_method_dispatch_incorrect_case():
+    validate,obj = func_test_get_json(BAD_REQUEST)
+    response = obj.dispatch()
+
+    assert validate.success == False
+    assert validate.error_message == response
+
+def test_method_handler_mode_text():
+    validate,obj = func_test_get_json(TEXT_REQUEST_API)
+
+    response = obj.handler(validate.data,validate.request_status)
+    mode = response.mode
+
+    assert mode == DEFAULT_MODE_RESPONSE
     assert isinstance(response,Response)
 
-    json,status = client_obj.get_json(response)
-    assert status == codes.ok
-    assert json == None
+def test_method_handler_mode_dict():
+    validate,obj = func_test_get_json(TEXT_REQUEST_API,mode=DICT_MODE_RESPONSE)
 
-def test_incorrect_case_class_ClientSearch_method_dispatch():
-    client_obj = ClientSearch(INCORRECT_CASE_FOR_TEXT)
-    response = client_obj.dispatch()
+    response = obj.handler(validate.data,validate.request_status)
+    mode = response.mode
 
-    assert str(codes.ok) in response
+    assert mode == DICT_MODE_RESPONSE
+    assert isinstance(response,Response)
 
 
+
+def test_class_Respose_text():
+    response = func_test_get_response_serializer()
+
+    assert isinstance(response.text,str)
+
+
+def test_class_Respose_dict():
+    response = func_test_get_response_serializer(mode=DICT_MODE_RESPONSE)
+
+    assert isinstance(response.text,dict)
+
+
+def test_method_serializer_text():
+    response = func_test_get_response_serializer()
+    keys = ApiJsonIndex.get_keys()
+    response.serializer()
+
+    for key in keys:
+        assert key in response.text
+
+
+def test_method_serializer_dict():
+    response = func_test_get_response_serializer(mode=DICT_MODE_RESPONSE)
+    keys = ApiJsonIndex.get_keys()
+    response.serializer()
+
+    for key in keys:
+        assert key in response.text

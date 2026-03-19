@@ -16,20 +16,20 @@ async def watch_product_view():
 
 @app.post('/product/')
 async def validate_product_view(product:Validate_Request, response: Response):
-    logger.info('The view "validate_product_view" in urls is anctived')
+    logger.info('The view "validate_product_view" in urls has started')
     product.transform_text()
     text = product.text
     
     logger.debug(f'Trasform the Json body in text:{text} for Request Api ')
-    logger.debug('"validate_product_view" send request the Api')
-    clientsearch = ClientSearch(text)
+    clientsearch = ClientSearch(text,mode=DICT_MODE_RESPONSE)
 
-    response_dispatch = clientsearch.dispatch(mode=DICT_MODE_RESPONSE) # Refactoring
+    response_dispatch = clientsearch.dispatch() 
     logger.debug('Get the object Response or the text error')
 
     if isinstance(response_dispatch,str):
         logger.error(f'"validate_product_view" send error text : {response_dispatch} ')
-        response.status_code = status.HTTP_400_BAD_REQUEST    
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        logger.info('The view "validate_product_view" in urls has end')
         return{'message': response_dispatch}
         
     else:

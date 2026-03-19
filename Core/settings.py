@@ -1,5 +1,6 @@
 from decouple import config
 from .enums import Response_Mode
+from enum import Enum
 
 TYPE_KG = 'kg'
 TYPE_GRAMM = 'gramm'
@@ -21,16 +22,6 @@ DICT_MODE_RESPONSE = Response_Mode.DICT
 DEFAULT_MODE_VALIDATE = Response_Mode.TEXT.value
 DICT_MODE_VALIDATE = Response_Mode.DICT.value
 
-REQUEST_FIELDS = {'product':'Write the product for which you need to know the nutrients -> ',
-                  'mass':'Write the unit of mass measurement that is convenient for you (kg, gramm) -> ',
-                  'number':'Write the weight of your product -> ',
-                  'mode':'Who do you need response dict or text ->',
-                  'fields':['product','mass','number','mode']}
-
-INDEX_FOR_GET_JSON_VALUE = {'calories':'calories',
-                            'protein':'protein_g',
-                            'fat':'fat_total_g',
-                            'fields':['calories','protein','fat']}
 
 #На будущие это еще не работает
 CLASS_USE_TO_SEARCH = 'ApiClient.client.ClientSearch'
