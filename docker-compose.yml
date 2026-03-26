@@ -1,0 +1,12 @@
+
+services:
+  backend:
+    build: .
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    image: yourbestfriend8901/nutrient-calc:1.0
+    volumes:
+      - ./logs:/Nutrient-Calculator/logs
+     

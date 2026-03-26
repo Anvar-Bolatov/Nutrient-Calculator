@@ -1,0 +1,9 @@
+tests/
+practic.py
+practic1.py
+Calculator/
+venv/
+.git
+__pycache__/
+.env
+.pytest_cache
