@@ -1,19 +1,23 @@
 ## Project Nutrient-Calculator
 
 ## Utils 🧰
-Python,Pydantic,Pytest,Request
+
+### Base : Python
+### Framework : Pydantic,Pytest,Request
+### Another Utils : Docker,Postman
 
 ## **Description** 📚
 The Project send request to Api CalorieNinjas( link: https://calorieninjas.com/api )
 
 - In Project console get your params to request and send to Api
 
-- Wait the Api response and validate the response if params is not good the Api send Null and the Project write "The response is null"
+- Wait Api  the response validating use Pydantic if Api dont response the Project send message "The Api is No a live"
+- elif  is another Problem send the message the problem
   else the Project send you the Nutrient of the product
 
 - in the Project is division in Dir Validate,ApiClient,Test,Core,Backend for easy support the Project
 
-  - Validate use Pydantic for validate you params in Console
+  - Validate use Pydantic for validate you params in Console and Api
 
   - ApiClient use to send Request and Validate Api Response and get Json send use Request
  
@@ -26,7 +30,7 @@ The Project send request to Api CalorieNinjas( link: https://calorieninjas.com/a
   - Test used for storage tests in the Project
 
 
-## Warning ⚠️
+## Warning ⚠️(if you dont use Docker Hub)
 - Create logs dir in Origin Dir for Start Project or get Error
 - if you want change dir name go in Dir Core and change Costant DIR_LOGGER
 
@@ -41,7 +45,24 @@ In origin DIR have Dir Backend file urls.py its used for start API
 ```
 uvicorn Backend.urls:app
 ```
+## Docker Hub and Using Github 🏭:
 
+Github 
+```
+git clone (my repository)
+```
+and add .env [Example](.env.example)
+
+Create Image and start Container
+```
+  docker-compose up -d
+```
+
+## Using Only Docker Hub 🏭:
+add .env [Example](.env.example)
+```
+  docker run -p 8000:8000 -v ./logs:/Nutrient-Calculator/logs --env-file .env yourbestfriend8901/nutrient-calc:latest
+```
 ## How start Tests 🧪
 In origin Dir have Dir tests have 3 file 
 - 1 func_test utils Func for dont repeat for another 2 file in Dir Test
