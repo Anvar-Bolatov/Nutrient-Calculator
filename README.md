@@ -3,19 +3,20 @@
 ## Utils 🧰
 
 ### Base : Python
-### Framework : Pydantic,Pytest,Request
+### Library : Requests
+### Framework : Pydantic,Pytest,Flet
 ### Another Utils : Docker,Postman
 
 ## **Description** 📚
 The Project send request to Api CalorieNinjas( link: https://calorieninjas.com/api )
 
-- In Project console get your params to request and send to Api
+- In Project console get your params to request and send to Api or get your params using Frontend on Flet
 
 - Wait Api  the response validating use Pydantic if Api dont response the Project send message "The Api is No a live"
 - elif  is another Problem send the message the problem
   else the Project send you the Nutrient of the product
 
-- in the Project is division in Dir Validate,ApiClient,Test,Core,Backend for easy support the Project
+- in the Project is division in Dir Validate,ApiClient,Test,Core,Backend,Frontend for easy support the Project
 
   - Validate use Pydantic for validate you params in Console and Api
 
@@ -26,6 +27,8 @@ The Project send request to Api CalorieNinjas( link: https://calorieninjas.com/a
   - Core is the configur of the Project for easy change the Fields and Params have 2 fils (settings,settings_test)
 
   - Backend use to create endpoint and Api using FastApi
+
+  - Frontend used to get params and get user to send Api request( 🖼️[READ_FRONT.md]())
 
   - Test used for storage tests in the Project
 
@@ -63,6 +66,11 @@ add .env [Example](.env.example)
 ```
   docker run -p 8000:8000 -v ./logs:/Nutrient-Calculator/logs --env-file .env yourbestfriend8901/nutrient-calc:latest
 ```
+if you want start Frontend for Api use
+```
+  docker run -p 8500:8500 -v .\Frontend\logs:/Nutrient-Calculator_Frontend/logs yourbestfriend8901/frontend_nutrient-calc:latest
+```
+
 ## How start Tests 🧪
 In origin Dir have Dir tests have 3 file 
 - 1 func_test utils Func for dont repeat for another 2 file in Dir Test
