@@ -9,4 +9,11 @@ services:
     image: yourbestfriend8901/nutrient-calc:latest
     volumes:
       - ./logs:/Nutrient-Calculator/logs
-     
+  
+  fronted:
+    build: Frontend/.
+    ports:
+      - 8500:8500
+    image: yourbestfriend8901/frontend_nutrient-calc:latest
+    volumes:
+      - .\Frontend\logs:/Nutrient-Calculator_Frontend/logs
